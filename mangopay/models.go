@@ -42,3 +42,13 @@ type AuthResponse struct {
 	TokenType   string `json:"token_type"`
 	ExpiresIn   int    `json:"expires_in"`
 }
+
+type Hook struct {
+	Id           string `json:"Id"`
+	Url          string `json:"Url"`
+	Status       string `json:"Status"`
+	Validity     string `json:"Validity"`
+	EventType    string `json:"EventType"`
+	Tag          string `json:"Tag"`
+	CreationDate int64  `json:"CreationDate"`
+}

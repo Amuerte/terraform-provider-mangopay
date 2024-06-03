@@ -183,13 +183,14 @@ func (p *MangopayProvider) Configure(ctx context.Context, req provider.Configure
 
 func (p *MangopayProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewExampleResource,
+		//NewHookResource,
 	}
 }
 
 func (p *MangopayProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewClientsDataSource,
+		NewHookDataSource,
 	}
 }
 
