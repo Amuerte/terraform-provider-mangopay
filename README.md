@@ -3,4 +3,9 @@ A Terraform provider for Mangopay API
 
 ## How
 
-https://github.com/Amuerte/terraform-provider-mangopay
+https://developer.hashicorp.com/terraform/plugin/framework
+
+```
+export GOBIN=$GOPATH/bin
+
+```
