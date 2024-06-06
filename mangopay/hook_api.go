@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // GetAllHooks - Returns a list of configured hooks
@@ -14,6 +15,10 @@ func (c *Client) GetAllHooks() ([]Hook, error) {
 	if err != nil {
 		return hooks, err
 	}
+
+	q := req.URL.Query()
+	q.Add("per_page", "100")
+	req.URL.RawQuery = q.Encode()
 
 	body, err := c.doRequest(req, nil)
 	if err != nil {
@@ -28,9 +33,8 @@ func (c *Client) GetAllHooks() ([]Hook, error) {
 	return hooks, nil
 }
 
-// GetHooks - Returns a list of configured hooks
-func (c *Client) GetHook(hookID int64) (Hook, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s/hooks/%d", c.Host, c.AuthConfig.ClientID, hookID), nil)
+func (c *Client) GetHook(hookID string) (Hook, error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s/hooks/%s", c.Host, c.AuthConfig.ClientID, hookID), nil)
 
 	hook := Hook{}
 	if err != nil {
@@ -48,4 +52,30 @@ func (c *Client) GetHook(hookID int64) (Hook, error) {
 	}
 
 	return hook, nil
+}
+
+func (c *Client) CreateHook(hook Hook) (*Hook, error) {
+	rb, err := json.Marshal(hook)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s/hooks", c.Host, c.AuthConfig.ClientID), strings.NewReader((string(rb))))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	body, err := c.doRequest(req, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	newHook := Hook{}
+	err = json.Unmarshal(body, &newHook)
+	if err != nil {
+		return &newHook, err
+	}
+
+	return &newHook, nil
 }

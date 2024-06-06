@@ -44,11 +44,11 @@ type AuthResponse struct {
 }
 
 type Hook struct {
-	Id           string `json:"Id"`
-	Url          string `json:"Url"`
-	Status       string `json:"Status"`
-	Validity     string `json:"Validity"`
-	EventType    string `json:"EventType"`
-	Tag          string `json:"Tag"`
-	CreationDate int64  `json:"CreationDate"`
+	Id           string  `json:"Id,omitempty"`
+	Url          string  `json:"Url"`
+	Status       string  `json:"Status,omitempty"`
+	Validity     string  `json:"Validity,omitempty"`
+	EventType    string  `json:"EventType"`
+	Tag          *string `json:"Tag,omitempty"`
+	CreationDate int64   `json:"CreationDate,omitempty"`
 }

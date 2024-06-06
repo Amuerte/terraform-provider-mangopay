@@ -134,7 +134,7 @@ func (d *HookDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 			Status:       types.StringValue(hook.Status),
 			Validity:     types.StringValue(hook.Validity),
 			EventType:    types.StringValue(hook.EventType),
-			Tag:          types.StringValue(hook.Tag),
+			Tag:          types.StringPointerValue(hook.Tag),
 			CreationDate: types.Int64Value(int64(hook.CreationDate)),
 		}
 
