@@ -79,3 +79,29 @@ func (c *Client) CreateHook(hook Hook) (*Hook, error) {
 
 	return &newHook, nil
 }
+
+func (c *Client) UpdateHook(hookID string, hook Hook) (*Hook, error) {
+	rb, err := json.Marshal(hook)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s/%s/hooks/%s", c.Host, c.AuthConfig.ClientID, hookID), strings.NewReader((string(rb))))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	body, err := c.doRequest(req, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	updatedHook := Hook{}
+	err = json.Unmarshal(body, &updatedHook)
+	if err != nil {
+		return &updatedHook, err
+	}
+
+	return &updatedHook, nil
+}
