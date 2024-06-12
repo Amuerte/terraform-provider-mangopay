@@ -22,6 +22,7 @@ import (
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &HookResource{}
 var _ resource.ResourceWithImportState = &HookResource{}
+var _ resource.ResourceWithImportState = &HookResource{}
 
 func NewHookResource() resource.Resource {
 	return &HookResource{}
@@ -223,6 +224,7 @@ func (r *HookResource) Update(ctx context.Context, req resource.UpdateRequest, r
 }
 
 func (r *HookResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	// Delete is not implemented in
 	var data hookResourceModel
 
 	// Read Terraform prior state data into the model
